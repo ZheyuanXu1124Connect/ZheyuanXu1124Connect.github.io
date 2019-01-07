@@ -1,5 +1,6 @@
 <?php
 	mail_sender(){
+		
 		$username = $POST[username];
 		$password = $POST[password];
 		$reciever = "zxu322@gatech.edu";
