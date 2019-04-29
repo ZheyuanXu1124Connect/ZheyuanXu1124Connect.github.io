@@ -1,10 +1,10 @@
-body,td,th {
+dbody,td,th {
 	font-family: Courier New, Courier, monospace;
 	color: #1022ff;
 }
 
 body {
-	background-color: #lacec5;
+	background-color: #efdee7;
 }
 
 .style4 {
