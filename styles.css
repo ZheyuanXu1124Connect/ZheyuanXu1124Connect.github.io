@@ -3,6 +3,10 @@ dbody,td,th {
 	color: #1022ff;
 }
 
+div {
+    background-color:rgb(255,130,255);
+}
+
 body {
 	background-color: coral;
 }
