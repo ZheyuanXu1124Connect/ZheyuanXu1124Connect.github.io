@@ -30,6 +30,6 @@ body {
 }
 
 .tab:hover {
-	background-color: white;
+	background-color: green;
 	color: #000000;
 }
