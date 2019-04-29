@@ -1,65 +1,180 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head>
-
-
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><title>ECE 4012: Emulating NN with Resistor Network</title>
-
-<style type="text/css">
-
-body,td,th {
-	font-family: Courier New, Courier, monospace;
-	color: #6600CC;
-}
-body {
-	background-color: #caffd4;
-}
-.style4 {
-	font-size: 32px;
-	font-weight: bold;
-}
-.style5 {
-	font-size: 22px;
-}
-.style6 {font-size: 20px}
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="utf-8">
+		<title>ECE 4012: Smart IoT Alarm Clock</title>
+		<link rel="stylesheet" type="text/css" href="styles.css">
+		<script type="text/javascript">
+			var particles = [];
+			var elements = [];
+			var freeElements = [];
+			var MAX_X_VELOCITY = 2, MIN_SIZE = 3, MAX_SIZE = 8;
+			var lastTimestamp = Date.now();
+			var lastMove = Date.now();
+			var MAX_PARTICLES = 500;
+			function Particle(x, y) {
+				this.x = x;
+				this.y = y;
+				this.vx = (Math.random() * 2 - 1) * MAX_X_VELOCITY;
+				this.vy = 0;
+				this.ay = 10;
+				this.remainingLife = 500;
+						
+				var size = Math.round(Math.random() * (MAX_SIZE - MIN_SIZE)) + MIN_SIZE;
+				this.element = elements[freeElements[0]];
+				this.elementIndex = freeElements[0];
+				freeElements.splice(0, 1);
+				this.element.style.width = size + "px";
+				this.element.style.height = size + "px";
+				this.element.style.borderRadius = size + "px";
+				this.element.style.background = "rgb(0,0,0)";
+				this.element.style.opacity = 1;
+				this.element.style.left = this.x + "px";
+				this.element.style.top = this.y + "px";
+			}
+					
+			var animateParticles = (timestamp) => {
+				var delta = timestamp - lastTimestamp;
+				lastTimestamp = timestamp;
+				
+				for(var i=0; i<particles.length; i++) {
+					particles[i].vy += particles[i].ay * delta / 1000;
+					particles[i].remainingLife -= delta;
+					particles[i].x += particles[i].vx;
+					particles[i].y += particles[i].vy;
+					particles[i].element.style.left = particles[i].x + "px";
+					particles[i].element.style.top = particles[i].y + "px";
+					if(particles[i].remainingLife < 200) {
+						particles[i].element.style.opacity = particles[i].remainingLife / 200;
+					}
+					if(particles[i].remainingLife < 0) {
+						particles[i].element.style.top = "0px";
+						particles[i].element.style.left = "0px";
+						freeElements.push(particles[i].elementIndex);
+						particles.splice(particles[i], 1);
+						i--;
+					}
+				}
+				window.requestAnimationFrame(animateParticles);
+			}
+			window.requestAnimationFrame(animateParticles);
+					
+			window.onload = () => {
+			
+				for(var i=0; i<MAX_PARTICLES; i++) {
+					elements.push(document.createElement('div'));
+					document.body.appendChild(elements[i]);
+					elements[i].style.opacity = 0;
+					elements[i].style.position = "absolute";
+					freeElements.push(i);
+				}
+				window.onmousemove = (e) => {
+					if(Date.now() - lastMove > 30) {
+						lastMove = Date.now();
+						particles.push(new Particle(e.clientX+6, e.clientY+12+window.scrollY));
+					}
+				};
+			};
+		</script>
 </style></head><body>
-<p class="style4" align="center">Emulating NN with Resistor Network</p>
-<p class="style4" align="center">ECE4012YS1 Advisor: Dr. Shiming Yu</p>
+<p class="style4" align="center">Smart IoT Alarm Clock</p>
+<p class="style4" align="center">ECE4012 - Dr. Ma</p>
 <hr>
 <table width="100%" border="0" cellspacing="2" cellpadding="2">
   <tr> 
     <td width="49%" height="198"> 
       <p class="style5">Technical Review Papers from ECE4011</p>
       <blockquote> 
-        <p>Yunfeng Xin (<a href="trpkaustavmalik.docx">.docx</a> )</p>
-        <p>William Scott (<a href="trpejnararechavala.docx">.docx</a> )</p>
-        <p>Runfeng Chen (<a href="trpadityamohile.docx">.docx</a> )</p>
-        <p>William Trimmer (<a href="trpamannair.docx">.docx</a> )</p>
-        <p>Zheyuan Xu (<a href="trpamannair.docx">.docx</a> )</p>
-        <p>Sho Ko (<a href="trpamannair.docx">.docx</a> )</p>
+        <p>Spencer Bongiovi <a class="tab" href="TRPSpencer.docx">.docx</a> <a class="tab" href="TRPSpencer.pdf">.pdf</a></p>
+        <p>Cameron Causer <a class="tab" href="TRPCameron.docx">.docx</a> <a class="tab" href="TRPCameron.pdf">.pdf</a></p>
+        <p>Kevin Hilinski <a class="tab" href="TRPKevin.docx">.docx</a> <a class="tab" href="TRPKevin.pdf">.pdf</a></p>
+        <p>Zachary Russell <a class="tab" href="TRPZachary.docx">.docx </a><a class="tab" href="TRPZachary.pdf">.pdf</a></p>
+        <p>Joshua Salajan <a class="tab" href="TRPJoshua.docx">.docx</a> <a class="tab" href="TRPJoshua.pdf">.pdf</a></p>
       </blockquote>
     </td>
     <td width="51%" height="198"> 
       <div align="right"> 
-        <p align="center"><a href="picturegroup.jpg"><img src="poster.png" width="643" height="210" border="0"></a><br>
-          <font size="-1" face="Arial, Helvetica, sans-serif">(L-R: <a href="picturegeorgeburdell.jpg">George 
-          Burdell</a>, <a href="picturegeorgiaburdell.jpg">Georgia Brudell</a>, 
-          <a href="picturethelmalou.jpg">Thelma Lou</a>, <a href="picturejanedoe.jpg">Jane 
-                    Doe</a>, <a href="picturebillybob.jpg">Billy Bob</a>)</font></p>
+        <p align="center"><a href="Expo Team Picture.jpg"><img src="Expo Team Picture.jpg" width="472" height="306" border="0"></a><br>
+          <font size="-1" face="Arial, Helvetica, sans-serif">(L-R: Zachary Russell, Cameron Causer, Kevin Hilinski, Spencer Bongiovi, Joshua Salajan)</font></p>
       </div>
     </td>
   </tr>
 </table>
 <p class="style5">&nbsp;</p>
-<p class="style5">Accepted Written Proposal (<a href="acceptedproposal.pdf">.pdf</a>)</p>
-<p class="style5">Poster Presentation (<a href="presentation.pptx">.pptx</a>)</p>
-<p class="style5"></p>
+<p class="style5">Accepted Written Proposal <a class="tab" href="Proposal.docx">.docx</a> 
+  <a class="tab" href="Proposal.pdf">.pdf</a></p>
+<p class="style5">Proposal Presentation <a class="tab" href="Proposal Presentation.pptx">.pptx</a> 
+  <a class="tab" href="Proposal Presentation.pdf">.pdf</a></p>
+<p class="style5">Latest Project Summary <a class="tab" href="Project Summary.docx">.docx</a> 
+  <a class="tab" href="Project Summary.pdf">.pdf</a></p>
+<p class="style5">Final Written Report <a class="tab" href="Final Written Report.docx">.docx</a> 
+  <a class="tab" href="Final Written Report.pdf">.pdf</a></p>
 <p class="style5">&nbsp;</p>
-<p class="style5">Latest Project Summary (<a href="ProjectSummary.pdf">.pdf</a>)</p>
+<p class="style5"> Additional Supporting Documentation:</p>
+<blockquote> 
+  <p><a>Software Code:</a><a class="tab" href="Phone App.txt">Phone App</a><a class="tab" href="Pi Code.txt">Pi Code</a><br>
+	<a>Expo Poster:</a><a class="tab" href="Expo Poster Updated.pptx">.pptx</a><a class="tab" href="Expo Poster Updated.pdf">.pdf</a><br>
+	<a>Proof Of Specifications Video:</a><br><br><iframe width="800" height="450" src="Proof of Spec_Large.mp4"></iframe>
+  </p>
+  </blockquote>
 <p class="style5">&nbsp;</p>
-<p class="style5">Final Presentation (<a href="finalpresentation.pptx">.pptx</a>)</p>
-<p class="style5"> <label>Final Written Report (<a href="finalwrittenreport.docx">.docx</a> 
-  <a href="finalwrittenreport.pdf">.pdf</a>)</label></p>
 <p class="style5">&nbsp;</p>
-<p class="style5"> Additional Supporting Documentation</p>
 <p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<p class="style5">&nbsp;</p>
+<iframe width="800" height="450" src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<p class="style5">&nbsp;</p>
+<iframe
+    src="https://player.twitch.tv/?channel=bongiovirocks&muted=true"
+    height="450"
+    width="800"
+    frameborder="0"
+    scrolling="no"
+    allowfullscreen="true">
+</iframe>
 </body></html>
